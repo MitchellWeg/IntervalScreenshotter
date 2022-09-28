@@ -1,7 +1,7 @@
 # IntervalScreenshotter
 Take screenshots at an interval.
 
-## Usage
+## Flags
 From the command line you can pass a number of flags:
 
 | Full Name  | Abbreviated | Help                                                                                 |
@@ -11,6 +11,7 @@ From the command line you can pass a number of flags:
 | output-dir | o           | The directory of which to store the screenshots (optional)                           |
 | verbose    | v           | Set CLI to verbose mode, i.e. output how many shots were taken                       |
 
+## Usage
 ```
 .\Screenshotter.exe --interval 3
 ```
