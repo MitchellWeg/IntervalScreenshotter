@@ -1,6 +1,8 @@
 ﻿using IntervalScreenshotter;
 using CommandLine;
 using CommandLine.Text;
+using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 
 namespace Screenshotter 
 {
@@ -26,7 +28,6 @@ namespace Screenshotter
                          .WithNotParsed(errs => DisplayHelp(parserResult, errs));
         }
 
-
         private static void Run(Options opts)
         {
             IntervalScreenshotter.Screenshotter.TypeOfSeconds _type = IntervalScreenshotter.Screenshotter.TypeOfSeconds.Milliseconds;
@@ -49,11 +50,15 @@ namespace Screenshotter
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable< Error> errs)
         {  
+          string copyRightNotice = "Copyright (c) MitchellWeg 2022";
+          string programName = "IntervalScreenshotter";
+          string programVersion = "1.0.0";
+
           var helpText = HelpText.AutoBuild(result, h =>
           {
             h.AdditionalNewLineAfterOption = false;
-            h.Heading = "IntervalScreenshotter 0.0.1"; 
-            h.Copyright = "Copyright (c) MitchellWeg 2022"; 
+            h.Heading = String.Format("{0} version {1}", programName, programVersion); 
+            h.Copyright = copyRightNotice; 
             return HelpText.DefaultParsingErrorsHandler(result, h);
           }, e => e);
           Console.WriteLine(helpText);
