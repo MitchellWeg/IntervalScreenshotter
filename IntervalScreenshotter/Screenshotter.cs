@@ -16,7 +16,12 @@ namespace IntervalScreenshotter
         /// </summary>
         public int interval { get; private set; }
 
-        public Screenshotter(int interval, TypeOfSeconds type)
+        /// <summary>
+        /// Directory where to write the screenshots to
+        /// </summary>
+        public int outputDirectory { get; private set; }
+
+        public Screenshotter(int interval, TypeOfSeconds type, String outputDirectory)
         {
             this.interval = ParseSeconds(interval, type);
         }

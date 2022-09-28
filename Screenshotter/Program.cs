@@ -13,15 +13,17 @@ namespace Screenshotter
 
             [Option('s', "seconds", Required = false, HelpText = "Set interval to seconds")]
             public bool Seconds { get; set; }
+
+            [Option('o', "output-dir", Required = false, HelpText = "Full directory path of which to write the screenshots to. If unset, 'MyDocuments' will be used. ")]
+            public string? OutputDirectory { get; set; }
         }
     
         static void Main(string[] args)
         {
-            IntervalScreenshotter.Screenshotter.TypeOfSeconds _type = IntervalScreenshotter.Screenshotter.TypeOfSeconds.Milliseconds;
-              var parser = new CommandLine.Parser(with => with.HelpWriter = null);
-              var parserResult = parser.ParseArguments<Options>(args);
-              parserResult.WithParsed<Options>(options => Run(options))
-                          .WithNotParsed(errs => DisplayHelp(parserResult, errs));
+             var parser = new CommandLine.Parser(with => with.HelpWriter = null);
+             var parserResult = parser.ParseArguments<Options>(args);
+             parserResult.WithParsed<Options>(options => Run(options))
+                         .WithNotParsed(errs => DisplayHelp(parserResult, errs));
         }
 
 
@@ -34,9 +36,15 @@ namespace Screenshotter
                 _type = IntervalScreenshotter.Screenshotter.TypeOfSeconds.Seconds;
             }
 
-           IntervalScreenshotter.Screenshotter screenshotter = new IntervalScreenshotter.Screenshotter(opts.Interval, _type);
+            if(opts.OutputDirectory == null)
+            {
+                var documentsDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                opts.OutputDirectory = documentsDir;
+            }
 
-           screenshotter.TakeScreenshots();
+            IntervalScreenshotter.Screenshotter screenshotter = new IntervalScreenshotter.Screenshotter(opts.Interval, _type, opts.OutputDirectory);
+
+            screenshotter.TakeScreenshots();
         }
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable< Error> errs)
