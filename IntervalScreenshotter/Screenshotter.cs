@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using Screenshotter;
+using System.Security.Principal;
+using System.Threading;
 
 namespace IntervalScreenshotter
 {
@@ -19,11 +21,12 @@ namespace IntervalScreenshotter
         /// <summary>
         /// Directory where to write the screenshots to
         /// </summary>
-        public int outputDirectory { get; private set; }
+        public string outputDirectory { get; private set; }
 
         public Screenshotter(int interval, TypeOfSeconds type, String outputDirectory)
         {
             this.interval = ParseSeconds(interval, type);
+            this.outputDirectory = outputDirectory;
         }
 
         /// <summary>
@@ -31,10 +34,14 @@ namespace IntervalScreenshotter
         /// </summary>
         public void TakeScreenshots()
         {
+            DirectoryInfo dirInfo = new DirectoryInfo(this.outputDirectory);
+            PrintScreen printScreen = new PrintScreen();
+
             while(true)
             {
                 Thread.Sleep(interval);
                 Console.WriteLine("Taken");
+
             }
         }
 
