@@ -1,5 +1,5 @@
 ﻿using Screenshotter;
-using System.Security.Principal;
+using System;
 using System.Threading;
 
 namespace IntervalScreenshotter
@@ -40,8 +40,11 @@ namespace IntervalScreenshotter
             while(true)
             {
                 Thread.Sleep(interval);
-                Console.WriteLine("Taken");
 
+                long dateTime = DateTime.Now.Ticks;
+                string fileName = string.Format("screenshotter-{0}.png", dateTime.ToString());
+
+                printScreen.CaptureScreenToFile(string.Format("{0}\\{1}", dirInfo, fileName),  System.Drawing.Imaging.ImageFormat.Png);
             }
         }
 
