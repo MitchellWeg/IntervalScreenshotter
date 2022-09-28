@@ -16,6 +16,9 @@ namespace Screenshotter
             [Option('s', "seconds", Required = false, HelpText = "Set interval to seconds")]
             public bool Seconds { get; set; }
 
+            [Option('v', "verbose", Required = false, HelpText = "Set to verbose mode")]
+            public bool Verbose { get; set; }
+
             [Option('o', "output-dir", Required = false, HelpText = "Full directory path of which to write the screenshots to. If unset, 'MyDocuments' will be used. ")]
             public string? OutputDirectory { get; set; }
         }
@@ -45,7 +48,13 @@ namespace Screenshotter
 
             IntervalScreenshotter.Screenshotter screenshotter = new IntervalScreenshotter.Screenshotter(opts.Interval, _type, opts.OutputDirectory);
 
-            screenshotter.TakeScreenshots();
+            foreach(int shot in screenshotter.TakeScreenshots())
+            {
+                if (opts.Verbose)
+                {
+                    Console.WriteLine(shot);
+                }
+            }
         }
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable< Error> errs)

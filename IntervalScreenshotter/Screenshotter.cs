@@ -32,8 +32,9 @@ namespace IntervalScreenshotter
         /// <summary>
         /// Take the screenshots.
         /// </summary>
-        public void TakeScreenshots()
+        public IEnumerable<int> TakeScreenshots()
         {
+            int shotsTaken = 1;
             DirectoryInfo dirInfo = new DirectoryInfo(this.outputDirectory);
             PrintScreen printScreen = new PrintScreen();
 
@@ -45,6 +46,7 @@ namespace IntervalScreenshotter
                 string fileName = string.Format("screenshotter-{0}.png", dateTime.ToString());
 
                 printScreen.CaptureScreenToFile(string.Format("{0}\\{1}", dirInfo, fileName),  System.Drawing.Imaging.ImageFormat.Png);
+                yield return shotsTaken++;
             }
         }
 
